@@ -5,19 +5,30 @@ import { ApolloServerPluginDrainHttpServer } from "@apollo/server/plugin/drainHt
 import bodyParser from "body-parser";
 import { expressMiddleware } from "@apollo/server/express4";
 import cors from "cors";
+import fakeData from "./fakeData/index.js";
 
 const app = express();
 const httpServer = http.createServer(app);
 
 const typeDefs = `#graphql
-  type Query {
+  type Folder {
+    id: String,
+    name: String,
+    createAt:String,
+    auhtor: Author
+  }
+  type Author {
+    id: String,
     name: String
+  }
+  type Query {
+    folders: [Folder]
   }
 `;
 const resolvers = {
   Query: {
-    name: () => {
-      return "HoleTex";
+    folders: () => {
+      return fakeData.folders;
     },
   },
 };
