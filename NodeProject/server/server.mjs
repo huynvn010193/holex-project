@@ -15,7 +15,7 @@ const typeDefs = `#graphql
     id: String,
     name: String,
     createAt:String,
-    auhtor: Author
+    author: Author
   }
   type Author {
     id: String,
@@ -26,9 +26,18 @@ const typeDefs = `#graphql
   }
 `;
 const resolvers = {
+  // resolver cha
   Query: {
     folders: () => {
       return fakeData.folders;
+    },
+  },
+  // Viết cho mỗi lần graphQL thấy dữ liệu author thì trả về
+  // resolver con
+  Folder: {
+    author: (parent, args) => {
+      const { authorId } = parent;
+      return fakeData.authors.find((author) => author.id === authorId);
     },
   },
 };
