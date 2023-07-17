@@ -15,7 +15,11 @@ npm install --save @apollo/server express http cors body-parser
   * Subscription: hoạt động phía client update theo dạng real-time
 
 - Trong resolver có 4 tham số
+
   - parent
   - args: Những dữ liệu từ client gửi lên
   - context
   - info
+
+  === React
+  npm install --save react-router-dom
