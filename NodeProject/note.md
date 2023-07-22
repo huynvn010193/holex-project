@@ -23,3 +23,6 @@ npm install --save @apollo/server express http cors body-parser
 
   === React
   npm install --save react-router-dom
+  install material: @mui/material @emotion/react @emotion/styled
+  npm install --save @fontsource/roboto
+  cài icon từ material: npm install --save @mui/icons-material
