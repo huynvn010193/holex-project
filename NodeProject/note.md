@@ -26,3 +26,4 @@ npm install --save @apollo/server express http cors body-parser
   install material: @mui/material @emotion/react @emotion/styled
   npm install --save @fontsource/roboto
   cài icon từ material: npm install --save @mui/icons-material
+  cài đặt thư viện editor: npm i --save react-draft-wysiwyg draft-js draftjs-to-html
