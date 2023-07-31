@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, Grid, List, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link, Outlet, useParams, useLoaderData } from "react-router-dom";
+import ErrorPage from "../pages/ErrorPage";
 
 export default function NoteList() {
   const { nodeId } = useParams();
@@ -9,7 +10,7 @@ export default function NoteList() {
   const { folder } = useLoaderData();
 
   return (
-    <Grid container height='100%'>
+    <Grid container height="100%">
       <Grid
         item
         xs={4}
@@ -30,7 +31,7 @@ export default function NoteList() {
             </Box>
           }
         >
-          {folder?.notes?.map(({ id, content }) => {
+          {folder.notes.map(({ id, content }) => {
             return (
               <Link
                 key={id}

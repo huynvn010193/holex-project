@@ -8,9 +8,12 @@ export const resolvers = {
       const folders = await FolderModel.find();
       return folders;
     },
-    folder: (parent, args) => {
+    folder: async (parent, args) => {
       const folderId = args.folderId;
-      return fakeData.folders.find((folder) => folder.id === folderId);
+      const foundFolder = await FolderModel.findOne({
+        _id: folderId,
+      });
+      return foundFolder;
     },
     note: (parent, args) => {
       const noteId = args.noteId;
