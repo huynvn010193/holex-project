@@ -32,3 +32,5 @@ npm install --save @apollo/server express http cors body-parser
 === Server: cài đặt
 npm install --save mongoose
 npm install --save dotenv
+
+= Thêm ký hiệu chấm than phía sau là không được để trống

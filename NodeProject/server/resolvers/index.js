@@ -1,10 +1,12 @@
 import fakeData from "../fakeData/index.js";
+import FolderModel from "../models/FolderModel.js";
 
 export const resolvers = {
   // resolver cha
   Query: {
-    folders: () => {
-      return fakeData.folders;
+    folders: async () => {
+      const folders = await FolderModel.find();
+      return folders;
     },
     folder: (parent, args) => {
       const folderId = args.folderId;
@@ -24,6 +26,14 @@ export const resolvers = {
     },
     notes: (parent, args) => {
       return fakeData.notes.filter((note) => note.folderId === parent.id);
+    },
+  },
+  Mutation: {
+    addFolder: async (parent, args) => {
+      const newFolder = new FolderModel({ ...args, authorId: "123" });
+      console.log({ newFolder });
+      await newFolder.save();
+      return newFolder;
     },
   },
 };

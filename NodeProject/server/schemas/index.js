@@ -19,4 +19,7 @@ export const typeDefs = `#graphql
     folder(folderId: String): Folder
     note(noteId: String): Note
   }
+  type Mutation {
+    addFolder(name: String!): Folder
+  }
 `;
