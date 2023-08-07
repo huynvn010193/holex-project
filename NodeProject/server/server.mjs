@@ -12,6 +12,9 @@ import "dotenv/config";
 import { resolvers } from "./resolvers/index.js";
 import { typeDefs } from "./schemas/index.js";
 import { getAuth } from "firebase-admin/auth";
+const { default: graphqlUploadExpress } = await import(
+  "graphql-upload/graphqlUploadExpress.mjs"
+);
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -30,20 +33,16 @@ await server.start();
 
 // Viết Authoration JWT middleware: => Chặn tất cả request từ phía client gửi tới. => Cần verify token coi có hợp lệ hay không
 // => đưa xuống tiếp xử lý
+
 const authorizationJWT = async (req, res, next) => {
-  console.log({ authorization: req.headers.authorization });
   const authorizationHeader = req.headers.authorization;
 
   if (authorizationHeader) {
     const accessToken = authorizationHeader.split(" ")[1];
-    console.log(
-      "🚀 ~ file: server.mjs:39 ~ authorizationJWT ~ accessToken:",
-      accessToken
-    );
     getAuth()
       .verifyIdToken(accessToken)
       .then((decodedToken) => {
-        console.log({ decodedToken });
+        res.locals.uid = decodedToken.uid;
         next();
       })
       .catch((err) => {
@@ -52,13 +51,25 @@ const authorizationJWT = async (req, res, next) => {
       });
   } else {
     return res.status(401).json({ message: "Unauthorized" });
+    next(); //=> Nếu reuqest gửi lên hợp lệ => gọi tới next để tiến hành gọi tới các middleware tiếp theo
   }
-
-  next(); //=> Nếu reuqest gửi lên hợp lệ => gọi tới next để tiến hành gọi tới các middleware tiếp theo
 };
 
+app.use(graphqlUploadExpress());
+
 // Cấu hình một số middleware
-app.use(cors(), authorizationJWT, bodyParser.json(), expressMiddleware(server));
+// Tạo ra 1 context trong expressMiddleware khi đó => tất cả các resolver đều có thể truy cập context
+
+app.use(
+  cors(),
+  authorizationJWT,
+  bodyParser.json(),
+  expressMiddleware(server, {
+    context: async ({ req, res }) => {
+      return { uid: res.locals.uid };
+    },
+  })
+);
 
 mongoose.set("strictQuery", false);
 mongoose
