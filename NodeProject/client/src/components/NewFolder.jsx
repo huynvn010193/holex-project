@@ -9,7 +9,9 @@ import {
   Tooltip,
 } from "@mui/material";
 import { CreateNewFolderOutlined } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { addNewFolder } from "../utils/folderUtils";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 export default function NewFolder() {
   const [newFolderName, setNewFolderName] = useState();
@@ -17,17 +19,34 @@ export default function NewFolder() {
   const handleNewFolderNameChange = (e) => {
     setNewFolderName(e.target.value);
   };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const popupName = searchParams.get("popup");
+  const navigate = useNavigate();
 
-  const handleAddNewFolder = () => {};
+  const handleAddNewFolder = async () => {
+    const { addFolder } = await addNewFolder({ name: newFolderName });
+    console.log({ addFolder });
+    handleClose();
+  };
 
   const handleClose = () => {
-    setOpen(false);
     setNewFolderName("");
+    navigate(-1);
   };
 
   const handleOpenPopup = () => {
-    setOpen(true);
+    setSearchParams({ popup: "add-folder" });
+    // setOpen(true);
   };
+
+  useEffect(() => {
+    if (popupName === "add-folder") {
+      setOpen(true);
+      return;
+    }
+    setOpen(false);
+  }, [popupName]);
+
   return (
     <div>
       <Tooltip title="Add folder" onClick={handleOpenPopup}>

@@ -1,13 +1,17 @@
 import { graphQLRequest } from "./request";
 
 export const notesLoader = async ({ params: { folderId } }) => {
-  const query = `query Notes($folderId: String!) {folder(folderId: $folderId) {id,name,notes {
+  const query = `query Notes($folderId: String!) {
+    folder(folderId: $folderId) {
+        id,
+        name,
+        notes {
           id
           content
         }
       }
     }
-    `;
+  `;
 
   const data = await graphQLRequest({
     query,
