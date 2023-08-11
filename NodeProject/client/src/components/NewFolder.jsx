@@ -25,7 +25,6 @@ export default function NewFolder() {
 
   const handleAddNewFolder = async () => {
     const { addFolder } = await addNewFolder({ name: newFolderName });
-    console.log({ addFolder });
     handleClose();
   };
 

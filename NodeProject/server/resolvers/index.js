@@ -27,9 +27,12 @@ export const resolvers = {
   // Viết cho mỗi lần graphQL thấy dữ liệu author thì trả về
   // resolver con
   Folder: {
-    author: (parent, args) => {
+    author: async (parent, args) => {
       const { authorId } = parent;
-      return fakeData.authors.find((author) => author.id === authorId);
+      const author = await AuthorModel.findOne({
+        uid: authorId,
+      });
+      return author;
     },
     notes: (parent, args) => {
       return fakeData.notes.filter((note) => note.folderId === parent.id);
