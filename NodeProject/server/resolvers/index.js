@@ -8,6 +8,8 @@ export const resolvers = {
     folders: async (parent, args, context) => {
       const folders = await FolderModel.find({
         authorId: context.uid,
+      }).sort({
+        updatedAt: "desc",
       });
 
       return folders;
@@ -39,6 +41,11 @@ export const resolvers = {
     },
   },
   Mutation: {
+    addNote: async (parent, args) => {
+      const newNote = new NoteModel(args);
+      await newNote.save();
+      return newNote;
+    },
     addFolder: async (parent, args, context) => {
       const newFolder = new FolderModel({ ...args, authorId: context.uid });
       console.log({ newFolder });
