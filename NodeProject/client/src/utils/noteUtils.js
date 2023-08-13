@@ -41,3 +41,25 @@ export const noteLoader = async ({ params: { noteId } }) => {
 
   return data;
 };
+
+export const addNewNote = async ({ params, request }) => {
+  const newNote = await request.formData();
+
+  const formDataObj = {};
+  newNote.forEach((value, key) => (formDataObj[key] = value));
+  const query = `mutation Mutation($content: String!, $folderId: ID!) {
+    addNote(content: $content, folderId: $folderId) {
+      id
+      content
+    }
+  }`;
+
+  const { addNote } = await graphQLRequest({
+    query,
+    variables: formDataObj,
+  });
+
+  console.log("addNote", addNote);
+
+  return addNote;
+};

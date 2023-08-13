@@ -6,7 +6,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import ErrorPage from "../pages/ErrorPage";
 import NoteList from "../components/NoteList";
 import Note from "../components/Note";
-import { noteLoader, notesLoader } from "../utils/noteUtils";
+import { addNewNote, noteLoader, notesLoader } from "../utils/noteUtils";
 import { folderLoader } from "../utils/folderUtils";
 
 const AuthLayout = () => {
@@ -38,6 +38,7 @@ export default createBrowserRouter([
                 element: <NoteList />,
                 path: `folders/:folderId`,
                 loader: notesLoader,
+                action: addNewNote, // khi nào submit lên đường dẫn đó với method khác get là post hoặc put thì action sẽ được thực thi
                 children: [
                   {
                     element: <Note />,
