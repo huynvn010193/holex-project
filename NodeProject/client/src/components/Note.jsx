@@ -7,12 +7,14 @@ import {
 } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useSubmit, useLocation } from "react-router-dom";
 
 export default function Note() {
   const { note } = useLoaderData();
+  const location = useLocation();
+  const submit = useSubmit();
 
-  console.log("note", note);
+  console.log("location", location);
 
   const [editorsState, setEditorState] = useState(() => {
     return EditorState.createEmpty();
@@ -35,7 +37,6 @@ export default function Note() {
   }, [note.content]);
 
   const handleOnChange = (e) => {
-    console.log("handleOnChange");
     setEditorState(e);
     setRawHTML(draftToHtml(convertFromRaw(e.getCurrentContent())));
   };

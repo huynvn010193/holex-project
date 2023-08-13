@@ -45,6 +45,11 @@ export const resolvers = {
     },
   },
   Mutation: {
+    updateNote: async (parent, args) => {
+      const noteId = args.id;
+      const note = await NoteModel.findByIdAndUpdate(noteId, args);
+      return note;
+    },
     addNote: async (parent, args) => {
       const newNote = new NoteModel(args);
       await newNote.save();

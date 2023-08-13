@@ -8,23 +8,35 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Link,
   Outlet,
   useParams,
   useLoaderData,
   useSubmit,
+  useNavigate,
 } from "react-router-dom";
 import ErrorPage from "../pages/ErrorPage";
 import { NoteAddOutlined } from "@mui/icons-material";
 
 export default function NoteList() {
-  const { nodeId, folderId } = useParams();
-  const [activeNoteId, setActiveNoteId] = useState(nodeId);
-  // const folder = { notes: [{ id: "1", content: "<p>This is new note</p>" }] };
+  const { noteId, folderId } = useParams();
+  const [activeNoteId, setActiveNoteId] = useState(noteId);
   const { folder } = useLoaderData();
   const submit = useSubmit();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (noteId) {
+      setActiveNoteId(noteId);
+      return;
+    }
+    if (folder?.notes?.[0]) {
+      navigate(`note/${folder.notes[0].id}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [noteId, folder.notes]);
 
   const handleAddNewNote = () => {
     submit(
