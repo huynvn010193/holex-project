@@ -42,7 +42,7 @@ const authorizationJWT = async (req, res, next) => {
     getAuth()
       .verifyIdToken(accessToken)
       .then((decodedToken) => {
-        console.log({ decodedToken });
+        // console.log({ decodedToken });
         res.locals.uid = decodedToken.uid;
         next();
       })

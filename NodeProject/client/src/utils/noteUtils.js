@@ -69,12 +69,18 @@ export const updateNote = async ({ params, request }) => {
   const formDataObj = {};
   updatedNote.forEach((value, key) => (formDataObj[key] = value));
   const query = `mutation Mutation(id: String!, $content: String!) {
-    addNote(id: $id, content: $content) {
+    updateNote(id: $id, content: $content) {
       id
       content
     }
   }`;
 
-  console.log("updatedNote", updatedNote);
-  return updatedNote;
+  const { updateNote } = await graphQLRequest({
+    query,
+    variables: formDataObj,
+  });
+
+  console.log({ updateNote });
+
+  return updateNote;
 };

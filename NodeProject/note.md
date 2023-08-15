@@ -37,3 +37,7 @@ npm install --save firebase-admin => thực hiện cho authen
 = Thêm ký hiệu chấm than phía sau là không được để trống
 
 = Khi trên url có sự thay đổi thì => loader trong router sẽ tự động được gọi
+
+== React:
+
+- Khi submit lên url => toàn bộ loader sẽ chạy lại.

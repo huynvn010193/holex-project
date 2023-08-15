@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   ContentState,
-  EditorState,
   convertFromHTML,
-  convertFromRaw,
+  convertToRaw,
+  EditorState,
 } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
 import draftToHtml from "draftjs-to-html";
 import { useLoaderData, useSubmit, useLocation } from "react-router-dom";
+import { debounce } from "@mui/material";
 
 export default function Note() {
   const { note } = useLoaderData();
-  const location = useLocation();
   const submit = useSubmit();
-
-  console.log("location", location);
-
-  const [editorsState, setEditorState] = useState(() => {
+  const location = useLocation();
+  const [editorState, setEditorState] = useState(() => {
     return EditorState.createEmpty();
   });
 
@@ -29,8 +27,29 @@ export default function Note() {
       blocksFromHTML.entityMap
     );
     setEditorState(EditorState.createWithContent(state));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [note.id]);
+
+  console.log({ location });
+
+  useEffect(() => {
+    debouncedMemorized(rawHTML, note, location.pathname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [rawHTML, location.pathname]);
+
+  const debouncedMemorized = useMemo(() => {
+    return debounce((rawHTML, note, pathname) => {
+      if (rawHTML === note.content) return;
+
+      submit(
+        { ...note, content: rawHTML },
+        {
+          method: "post",
+          action: pathname,
+        }
+      );
+    }, 1000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setRawHTML(note.content);
@@ -38,14 +57,14 @@ export default function Note() {
 
   const handleOnChange = (e) => {
     setEditorState(e);
-    setRawHTML(draftToHtml(convertFromRaw(e.getCurrentContent())));
+    setRawHTML(draftToHtml(convertToRaw(e.getCurrentContent())));
   };
 
   return (
     <Editor
-      editorState={editorsState}
+      editorState={editorState}
       onEditorStateChange={handleOnChange}
-      placeholder="Write something"
-    ></Editor>
+      placeholder="Write something!"
+    />
   );
 }
