@@ -27,9 +27,8 @@ export default function Note() {
       blocksFromHTML.entityMap
     );
     setEditorState(EditorState.createWithContent(state));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [note.id]);
-
-  console.log({ location });
 
   useEffect(() => {
     debouncedMemorized(rawHTML, note, location.pathname);
@@ -64,7 +63,7 @@ export default function Note() {
     <Editor
       editorState={editorState}
       onEditorStateChange={handleOnChange}
-      placeholder="Write something!"
+      placeholder='Write something!'
     />
   );
 }

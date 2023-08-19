@@ -39,6 +39,8 @@ export const resolvers = {
     notes: async (parent, args) => {
       const notes = await NoteModel.find({
         folderId: parent.id,
+      }).sort({
+        updatedAt: "desc",
       });
 
       return notes;
