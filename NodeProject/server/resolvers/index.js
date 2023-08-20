@@ -1,9 +1,18 @@
-import fakeData from "../fakeData/index.js";
+import { GraphQLScalarType } from "graphql";
 import AuthorModel from "../models/AuthorModel.js";
 import FolderModel from "../models/FolderModel.js";
 import NoteModel from "../models/NoteModel.js";
 
 export const resolvers = {
+  Date: new GraphQLScalarType({
+    name: "Date", // Khai báo tên gì thì trong schema phải đặt đúng tên đó.
+    parseValue(value) {
+      return new Date(value);
+    },
+    serialize(value) {
+      return value.toISOString();
+    },
+  }),
   // resolver cha
   Query: {
     folders: async (parent, args, context) => {

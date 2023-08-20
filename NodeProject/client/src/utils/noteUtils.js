@@ -7,7 +7,8 @@ export const notesLoader = async ({ params: { folderId } }) => {
         name,
         notes {
           id
-          content
+          content,
+          updatedAt
         }
       }
     }

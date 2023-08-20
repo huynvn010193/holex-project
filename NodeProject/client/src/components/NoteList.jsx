@@ -17,7 +17,8 @@ import {
   useSubmit,
   useNavigate,
 } from "react-router-dom";
-import ErrorPage from "../pages/ErrorPage";
+import moment from "moment";
+
 import { NoteAddOutlined } from "@mui/icons-material";
 
 export default function NoteList() {
@@ -81,7 +82,7 @@ export default function NoteList() {
             </Box>
           }
         >
-          {folder.notes.map(({ id, content }) => {
+          {folder.notes.map(({ id, content, updatedAt }) => {
             return (
               <Link
                 key={id}
@@ -106,6 +107,9 @@ export default function NoteList() {
                       }}
                     />
                   </CardContent>
+                  <Typography sx={{ fontSize: "10px" }}>
+                    {moment(updatedAt).format("MMMM Do YYYY, h:mm:ss a")}
+                  </Typography>
                 </Card>
               </Link>
             );

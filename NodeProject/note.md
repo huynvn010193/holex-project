@@ -41,3 +41,5 @@ npm install --save firebase-admin => thực hiện cho authen
 == React:
 
 - Khi submit lên url => toàn bộ loader sẽ chạy lại.
+
+- Tạo kiểu custom trong graphql => scalar.
