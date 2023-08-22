@@ -2,6 +2,9 @@ import { GraphQLScalarType } from "graphql";
 import AuthorModel from "../models/AuthorModel.js";
 import FolderModel from "../models/FolderModel.js";
 import NoteModel from "../models/NoteModel.js";
+import { PubSub } from "graphql-subscriptions";
+
+const pubsub = new PubSub();
 
 export const resolvers = {
   Date: new GraphQLScalarType({
