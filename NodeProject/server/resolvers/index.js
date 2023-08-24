@@ -73,6 +73,11 @@ export const resolvers = {
     },
     addFolder: async (parent, args, context) => {
       const newFolder = new FolderModel({ ...args, authorId: context.uid });
+      pubsub.publish("FOLDER_CREATED", {
+        folderCreated: {
+          message: "A new folder created",
+        },
+      });
       await newFolder.save();
       return newFolder;
     },
@@ -84,6 +89,11 @@ export const resolvers = {
         return newUser;
       }
       return foundUser;
+    },
+  },
+  Subscription: {
+    folderCreated: {
+      subscribe: () => pubsub.asyncIterator(["FOLDER_CREATED"]),
     },
   },
 };

@@ -28,4 +28,10 @@ export const typeDefs = `#graphql
     addNote(content: String!, folderId:ID!): Note,
     register(uid: String!, name: String!): Author
   }
+  type Message {
+    message: String
+  } 
+  type Subscription {
+    folderCreated: Message
+  }
 `;

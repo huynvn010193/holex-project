@@ -81,7 +81,7 @@ const authorizationJWT = async (req, res, next) => {
         return res.status(403).json({ message: "Forbidden", error: err });
       });
   } else {
-    return res.status(401).json({ message: "Unauthorized" });
+    // return res.status(401).json({ message: "Unauthorized" });
     next(); //=> Nếu reuqest gửi lên hợp lệ => gọi tới next để tiến hành gọi tới các middleware tiếp theo
   }
 };
