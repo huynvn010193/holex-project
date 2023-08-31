@@ -90,9 +90,13 @@ export const resolvers = {
       }
       return foundUser;
     },
+    pushNotification: async (parent, args) => {},
   },
   Subscription: {
+    // Khi có bất kỳ folder nào được tạo => thông báo cho người dùng.
     folderCreated: {
+      // Đang lắng nghe 1 event "FOLDER_CREATED"
+      // là array => có thể lắng nghe nhiều sự kiện.
       subscribe: () => pubsub.asyncIterator(["FOLDER_CREATED"]),
     },
   },

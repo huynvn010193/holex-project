@@ -31,7 +31,7 @@ export const noteLoader = async ({ params: { noteId } }) => {
       content
     }
   }
-    `;
+`;
 
   const data = await graphQLRequest({
     query,
