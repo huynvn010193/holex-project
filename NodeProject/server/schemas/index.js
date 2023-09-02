@@ -33,6 +33,7 @@ export const typeDefs = `#graphql
     message: String
   } 
   type Subscription {
-    folderCreated: Message
+    folderCreated: Message,
+    notification: Message
   }
 `;

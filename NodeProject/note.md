@@ -1,3 +1,6 @@
+Github holex:
+https://github.com/holetexvn/note-app-holetex
+
 init npm project: npm init --yes
 option --yes: tự trả lời các câu hỏi khi tạo mới npm project
 npm install --save @apollo/server express http cors body-parser
