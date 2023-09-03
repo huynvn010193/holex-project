@@ -46,3 +46,8 @@ npm install --save firebase-admin => thực hiện cho authen
 - Khi submit lên url => toàn bộ loader sẽ chạy lại.
 
 - Tạo kiểu custom trong graphql => scalar.
+
+install Nexlify CLI:
+npm install netlify-cli -g / npm install netlify-cli --save-dev
+sau đó chạy npm run build
+=> netlify dev --context production
